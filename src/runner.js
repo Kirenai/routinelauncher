@@ -42,13 +42,18 @@ export async function runner() {
     const scriptPath = path.join(routinesScripts, script);
     const spinner = ora(`Running ${script}...`).start();
 
+    let firstOutput = true;
+
     try {
       await new Promise((resolve, reject) => {
         const child = exec(`bash ${scriptPath}`, (error, stdout, stderr) => {
           if (error) {
             return reject(error);
           } else {
-            spinner.succeed(`✅  Successfully ran ${script}`);
+            if (firstOutput) {
+              firstOutput = false;
+              console.log();
+            }
             console.log(stdout);
             console.log(stderr);
             resolve();
@@ -56,19 +61,17 @@ export async function runner() {
         });
 
         child.stdout.on('data', (data) => {
-          spinner.stop();
           process.stdout.write(data);
         });
 
         child.stderr.on('data', (data) => {
-          spinner.stop();
           process.stderr.write(data);
         });
       });
 
-      spinner.succeed(`✅  Successfully ran ${script}`);
+      spinner.succeed(`Successfully ran ${script}`);
     } catch (error) {
-      spinner.fail(`❌  Failed to run ${script}: ${error.message}`);
+      spinner.fail(`Failed to run ${script}: ${error.message}`);
     }
   }
 }
