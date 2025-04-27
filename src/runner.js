@@ -42,18 +42,12 @@ export async function runner() {
     const scriptPath = path.join(routinesScripts, script);
     const spinner = ora(`Running ${script}...`).start();
 
-    let firstOutput = true;
-
     try {
       await new Promise((resolve, reject) => {
         const child = exec(`bash ${scriptPath}`, (error, stdout, stderr) => {
           if (error) {
             return reject(error);
           } else {
-            if (firstOutput) {
-              firstOutput = false;
-              console.log();
-            }
             console.log(stdout);
             console.log(stderr);
             resolve();
