@@ -1,0 +1,25 @@
+{
+  "name": "routinelauncher",
+  "version": "1.1.0",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "rt": "./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cli",
+    "scripts",
+    "automation",
+    "java",
+    "bash"
+  ],
+  "license": "MIT",
+  "description": "A friendly CLI to launch scripts in Java projects.",
+  "dependencies": {
+    "@inquirer/prompts": "^7.5.0",
+    "ora": "^8.2.0"
+  }
+}
