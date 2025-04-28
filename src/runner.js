@@ -44,8 +44,7 @@ export async function runner() {
 
     const scriptPath = path.join(routinesScripts, script);
     const spinner = ora({
-      text: `Running ${script}...`,
-      indent: 2,
+      text: `Running ${script}...`
     }).start();
 
     try {
