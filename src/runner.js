@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { checkbox } from '@inquirer/prompts';
+import { checkbox, Separator } from '@inquirer/prompts';
 import ora from 'ora';
 import { exec } from 'child_process';
 import * as path from 'node:path';
@@ -21,6 +21,9 @@ const scripts = [
   { name: 'Utils Script', value: 'utils_rm_migration.sh' },
   { name: 'Validation Script', value: 'validation_rm_migration.sh' },
   { name: 'BioCatch Script', value: 'behavioral_biometrics_validator_migration.sh' },
+  new Separator(),
+  { name: 'Container Script', value: 'podman_container.sh' },
+  { name: 'Sonar Script', value: 'sonar_scan.sh' },
 ];
 
 export async function runner() {
@@ -40,7 +43,10 @@ export async function runner() {
     console.log(`Running script: ${script}`);
 
     const scriptPath = path.join(routinesScripts, script);
-    const spinner = ora(`Running ${script}...`).start();
+    const spinner = ora({
+      text: `Running ${script}...`,
+      indent: 2,
+    }).start();
 
     try {
       await new Promise((resolve, reject) => {
@@ -48,8 +54,8 @@ export async function runner() {
           if (error) {
             return reject(error);
           } else {
-            console.log(stdout);
-            console.log(stderr);
+            // console.log(stdout);
+            // console.log(stderr);
             resolve();
           }
         });
